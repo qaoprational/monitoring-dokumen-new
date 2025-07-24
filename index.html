@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pencarian Dokumen Batch</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f7f7f7;
+    }
+    h1 {
+      color: #333;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 300px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      margin-left: 10px;
+    }
+    table {
+      margin-top: 20px;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Cari Dokumen Berdasarkan Batch Number</h1>
+  <input type="text" id="batchInput" placeholder="Masukkan Batch Number...">
+  <button onclick="cariBatch()">Cari</button>
+
+  <table id="hasilTable" style="display:none">
+    <thead>
+      <tr>
+        <th>Batch Number</th>
+        <th>Nama Dokumen</th>
+        <th>No Lemari</th>
+        <th>Lokasi Dokumen</th>
+        <th>Tanggal Produksi</th>
+        <th>Tanggal Expired</th>
+      </tr>
+    </thead>
+    <tbody id="hasilBody">
+    </tbody>
+  </table>
+
+  <script>
+    let dataDokumen = [];
+
+    // Muat data JSON dari file eksternal
+    fetch('data2025.json')
+      .then(response => response.json())
+      .then(data => dataDokumen = data)
+      .catch(error => alert("Gagal memuat data dokumen."));
+
+    function cariBatch() {
+      const input = document.getElementById('batchInput').value.trim().toLowerCase();
+      const hasilBody = document.getElementById('hasilBody');
+      const hasilTable = document.getElementById('hasilTable');
+      hasilBody.innerHTML = '';
+
+      const hasil = dataDokumen.filter(item => item.batch_number.toLowerCase() === input);
+
+      if (hasil.length > 0) {
+        hasil.forEach(item => {
+          const row = `<tr>
+            <td>${item.batch_number}</td>
+            <td>${item.nama_dokumen}</td>
+            <td>${item.no_lemari}</td>
+            <td>${item.lokasi_dokumen}</td>
+            <td>${item.tanggal_produksi}</td>
+            <td>${item.tanggal_exp}</td>
+          </tr>`;
+          hasilBody.innerHTML += row;
+        });
+        hasilTable.style.display = 'table';
+      } else {
+        hasilBody.innerHTML = '<tr><td colspan="6">Data tidak ditemukan</td></tr>';
+        hasilTable.style.display = 'table';
+      }
+    }
+  </script>
+</body>
+</html>

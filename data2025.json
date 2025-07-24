@@ -1,0 +1,18 @@
+[
+  {
+    "batch_number": "O030001",
+    "nama_dokumen": "TUTOSOL",
+    "no_lemari": "QA-22-01",
+    "lokasi_dokumen": "QA-22-01-01",
+    "tanggal_produksi": "2025",
+    "tanggal_exp": "2027"
+  },
+  {
+    "batch_number": "O030002",
+    "nama_dokumen": "TUTOSOL",
+    "no_lemari": "QA-22-01",
+    "lokasi_dokumen": "QA-22-01-01",
+    "tanggal_produksi": "2025",
+    "tanggal_exp": "2027"
+  }
+]
